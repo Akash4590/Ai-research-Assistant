@@ -1,77 +1,145 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Quote, Star } from 'lucide-react';
 
 const testimonials = [
   {
-    name: "Sophia Lee",
-    role: "Startup Founder",
-    feedback: "Mindscribe helped me summarize hours of research into actionable notes. It’s a game-changer!",
-    image: "https://randomuser.me/api/portraits/women/65.jpg"
+    name: 'Sophia Lee',
+    role: 'Startup founder',
+    feedback:
+      'Mindscribe turned dense market research into notes I could actually act on—without losing the original context.',
+    image: 'https://randomuser.me/api/portraits/women/65.jpg',
   },
   {
-    name: "Daniel Johnson",
-    role: "Medical Student",
-    feedback: "The AI assistant saved me hours by summarizing lectures and notes. I can focus more on studying.",
-    image: "https://randomuser.me/api/portraits/men/43.jpg"
+    name: 'Daniel Johnson',
+    role: 'Medical student',
+    feedback:
+      'Lecture PDFs and notes finally get summarized in a way that matches how I study. Huge time saver.',
+    image: 'https://randomuser.me/api/portraits/men/43.jpg',
   },
   {
-    name: "Ava Smith",
-    role: "Content Creator",
-    feedback: "Mindscribe turns long videos into quick summaries. This is the smartest tool I’ve used.",
-    image: "https://randomuser.me/api/portraits/women/32.jpg"
-  },
- 
-  {
-    name: "Emily Davis",
-    role: "UI/UX Designer",
-    feedback: "I love the simplicity and efficiency. Great UI, super useful features!",
-    image: "https://randomuser.me/api/portraits/women/45.jpg"
+    name: 'Ava Smith',
+    role: 'Content creator',
+    feedback:
+      'Long sources become tight outlines and talking points. Less tab-hopping, more creating.',
+    image: 'https://randomuser.me/api/portraits/women/32.jpg',
   },
   {
-    name: "James Brown",
-    role: "Software Developer",
-    feedback: "The best productivity tool I’ve added to my workflow this year.",
-    image: "https://randomuser.me/api/portraits/men/52.jpg"
+    name: 'Emily Davis',
+    role: 'Product designer',
+    feedback:
+      'Clean UI, predictable flow. It feels like a tool for focus—not another noisy AI dashboard.',
+    image: 'https://randomuser.me/api/portraits/women/45.jpg',
   },
   {
-    name: "Linda Parker",
-    role: "Software developer",
-    feedback: "Perfect tool for summarizing lectures and handouts for my students.",
-    image: "https://randomuser.me/api/portraits/women/50.jpg"
-  }
+    name: 'James Brown',
+    role: 'Software developer',
+    feedback:
+      'The best addition to my workflow this year for reading docs and turning them into decisions.',
+    image: 'https://randomuser.me/api/portraits/men/52.jpg',
+  },
+  {
+    name: 'Linda Parker',
+    role: 'Educator',
+    feedback:
+      'Summaries and highlights help me prep materials faster while keeping sources easy to verify.',
+    image: 'https://randomuser.me/api/portraits/women/50.jpg',
+  },
 ];
 
 const Testimonials = () => {
-  return (
-    <section className="bg-gradient-to-b from-indigo-50 to-white py-16">
-      <div className="container mx-auto text-center px-4">
-      <h2 className="text-3xl font-bold mb-10 text-indigo-700 inline-block hover:border-b-4 hover:border-indigo-600 transition-all cursor-pointer">
-  What Our Users Say
-</h2>
+  const shouldReduceMotion = useReducedMotion();
 
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((t, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="bg-white p-6 rounded-xl shadow-md border cursor-pointer"
-            >
-              <img
-                src={t.image}
-                alt={t.name}
-                className="w-16 h-16 rounded-full mx-auto mb-4"
-              />
-              <p className="text-gray-700 italic text-sm">"{t.feedback}"</p>
-              <h4 className="mt-4 font-semibold text-gray-900">{t.name}</h4>
-              <span className="text-sm text-gray-500">{t.role}</span>
-            </motion.div>
-          ))}
-        </div>
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: shouldReduceMotion ? { duration: 0 } : { staggerChildren: 0.07, delayChildren: 0.05 },
+    },
+  };
+
+  const item = {
+    hidden: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 },
+    show: shouldReduceMotion
+      ? { opacity: 1, y: 0 }
+      : { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  };
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white py-20">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 left-1/2 h-[380px] w-[380px] -translate-x-1/2 rounded-full bg-indigo-400/10 blur-3xl" />
+        <div className="absolute bottom-0 left-0 h-[280px] w-[280px] rounded-full bg-violet-400/10 blur-3xl" />
       </div>
+
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        className="relative mx-auto max-w-6xl px-6 md:px-10 lg:px-12"
+      >
+        <div className="mx-auto max-w-2xl text-center">
+          <motion.div
+            variants={item}
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-semibold tracking-wide text-slate-700 shadow-sm backdrop-blur"
+          >
+            <span className="h-2 w-2 rounded-full bg-indigo-500 shadow-[0_0_0_4px_rgba(99,102,241,0.15)]" />
+            Social proof
+          </motion.div>
+
+          <motion.h2 variants={item} className="mt-5 text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
+            What people say about Mindscribe
+          </motion.h2>
+
+          <motion.p variants={item} className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
+            Real workflows, real outcomes—research, study, and content teams using Mindscribe every week.
+          </motion.p>
+        </div>
+
+        <motion.div variants={item} className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {testimonials.map((t, index) => (
+            <motion.article
+              key={`${t.name}-${index}`}
+              variants={item}
+              whileHover={shouldReduceMotion ? undefined : { y: -3 }}
+              transition={shouldReduceMotion ? undefined : { duration: 0.25, ease: 'easeOut' }}
+              className="group flex h-full flex-col rounded-3xl border border-slate-200 bg-white/70 p-6 text-left shadow-sm backdrop-blur transition hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/5"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <Quote className="h-8 w-8 shrink-0 text-indigo-200 transition group-hover:text-indigo-300" aria-hidden />
+                <div className="flex gap-0.5" aria-hidden>
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star key={s} className="h-3.5 w-3.5 fill-amber-400/90 text-amber-400/90" />
+                  ))}
+                </div>
+              </div>
+
+              <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-slate-700">
+                <p>{t.feedback}</p>
+              </blockquote>
+
+              <footer className="mt-6 flex items-center gap-3 border-t border-slate-100 pt-5">
+                <img
+                  src={t.image}
+                  alt=""
+                  width={48}
+                  height={48}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-12 w-12 rounded-full object-cover ring-2 ring-white ring-offset-2 ring-offset-slate-50"
+                />
+                <div className="min-w-0">
+                  <cite className="not-italic">
+                    <span className="block font-semibold text-slate-900">{t.name}</span>
+                  </cite>
+                  <span className="text-sm text-slate-500">{t.role}</span>
+                </div>
+              </footer>
+            </motion.article>
+          ))}
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
