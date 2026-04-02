@@ -1,0 +1,21 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+  body{
+    font-family: "Roboto", sans-serif;
+  }  
+  .active-nav::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #EF4444; /* Tailwind's red-500 */
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+  }
+  
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
