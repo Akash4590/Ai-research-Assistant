@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FaPlus, FaMinus, FaQuestionCircle } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 
-const FAQs = () => {
+const Faq = () => {
   const [activeIndex, setActiveIndex] = useState(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const toggleAnswer = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -12,75 +13,122 @@ const FAQs = () => {
   const faqs = [
     {
       question: 'What is Mindscribe?',
-      answer: 'Mindscribe is an AI-powered tool that helps users summarize research, lectures, videos, and documents quickly, providing actionable insights.',
+      answer:
+        'Mindscribe is an AI research workspace: upload PDFs or add links, get structured summaries, and ask questions grounded in your sources.',
     },
     {
       question: 'How does Mindscribe work?',
-      answer: 'Mindscribe uses advanced machine learning and natural language processing (NLP) algorithms to analyze content and generate concise summaries.',
+      answer:
+        'You bring the material; Mindscribe extracts structure, key claims, and themes so you can summarize, search, and chat without losing context.',
     },
     {
       question: 'What platforms does Mindscribe support?',
-      answer: 'Mindscribe is available as a web application, with future plans for mobile and desktop apps.',
+      answer:
+        'Mindscribe runs in the browser today. Mobile and desktop apps may follow—your account and projects stay aligned with the web experience.',
     },
     {
-      question: 'Is my data secure with Mindscribe?',
-      answer: 'Yes, Mindscribe employs industry-leading security measures to protect your data, including encryption and secure cloud storage.',
+      question: 'Is my data secure?',
+      answer:
+        'We use encryption in transit and at rest, and design flows so your documents are handled with privacy in mind. Review our Privacy policy for details.',
     },
     {
       question: 'How do I get started?',
-      answer: 'Simply sign up for an account and start using Mindscribe to analyze and summarize content right away.',
+      answer:
+        'Create an account, upload a PDF or paste a link, and start with a summary or a question. You can explore core flows before upgrading.',
     },
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto text-center px-6">
-        <h2 className="text-3xl font-bold mb-10 text-indigo-700 inline-block hover:border-b-4 hover:border-indigo-600 transition-all duration-300 cursor-pointer">
-          Frequently Asked Questions
-        </h2>
+    <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white py-20">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-28 left-1/2 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-indigo-400/10 blur-3xl" />
+      </div>
 
-        <div className="max-w-3xl mx-auto space-y-6 text-left">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              onClick={() => toggleAnswer(index)}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all cursor-pointer"
-            >
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <FaQuestionCircle className="text-indigo-600 text-xl" />
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-900">{faq.question}</h3>
-                </div>
-                <div className="text-indigo-600">
-                  {activeIndex === index ? (
-                    <FaMinus className="text-xl" />
-                  ) : (
-                    <FaPlus className="text-xl" />
-                  )}
-                </div>
-              </div>
+      <div className="relative mx-auto max-w-3xl px-6 md:px-10 lg:px-12">
+        <div className="text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-semibold tracking-wide text-slate-700 shadow-sm backdrop-blur">
+            <span className="h-2 w-2 rounded-full bg-indigo-500 shadow-[0_0_0_4px_rgba(99,102,241,0.15)]" />
+            FAQ
+          </div>
+          <h2 className="mt-5 text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
+            Frequently asked questions
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
+            Straight answers about how Mindscribe fits into your research workflow.
+          </p>
+        </div>
 
-              <AnimatePresence>
-                {activeIndex === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
+        <div className="mt-12 space-y-3">
+          {faqs.map((faq, index) => {
+            const isOpen = activeIndex === index;
+            const panelId = `faq-panel-${index}`;
+            const buttonId = `faq-button-${index}`;
+
+            return (
+              <div
+                key={buttonId}
+                className="overflow-hidden rounded-2xl border border-slate-200 bg-white/80 shadow-sm backdrop-blur transition hover:border-slate-300"
+              >
+                <h3 className="text-base font-semibold md:text-lg">
+                  <button
+                    type="button"
+                    id={buttonId}
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => toggleAnswer(index)}
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-slate-900 transition hover:bg-slate-50/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/30 md:px-6 md:py-5"
                   >
-                    <p className="text-gray-700 mt-4 text-justify">
-                      {faq.answer}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+                    <span className="pr-2">{faq.question}</span>
+                    <span
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition ${
+                        isOpen ? 'border-indigo-200 bg-indigo-50 text-indigo-700' : ''
+                      }`}
+                      aria-hidden
+                    >
+                      <ChevronDown
+                        className={`h-5 w-5 transition-transform ${isOpen ? '-rotate-180' : ''}`}
+                      />
+                    </span>
+                  </button>
+                </h3>
+
+                <AnimatePresence initial={false}>
+                  {isOpen &&
+                    (shouldReduceMotion ? (
+                      <div
+                        id={panelId}
+                        role="region"
+                        aria-labelledby={buttonId}
+                        className="border-t border-slate-100"
+                      >
+                        <p className="px-5 pb-5 pt-0 text-sm leading-relaxed text-slate-600 md:px-6 md:pb-6 md:text-[15px]">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    ) : (
+                      <motion.div
+                        id={panelId}
+                        role="region"
+                        aria-labelledby={buttonId}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden border-t border-slate-100"
+                      >
+                        <p className="px-5 pb-5 pt-0 text-sm leading-relaxed text-slate-600 md:px-6 md:pb-6 md:text-[15px]">
+                          {faq.answer}
+                        </p>
+                      </motion.div>
+                    ))}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 };
 
-export default FAQs;
+export default Faq;
