@@ -39,21 +39,21 @@ const Faq = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white py-20">
+    <section className="faq-section-font relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white py-20 antialiased">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-28 left-1/2 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-indigo-400/10 blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-3xl px-6 md:px-10 lg:px-12">
         <div className="text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-semibold tracking-wide text-slate-700 shadow-sm backdrop-blur">
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-600 shadow-sm backdrop-blur">
             <span className="h-2 w-2 rounded-full bg-indigo-500 shadow-[0_0_0_4px_rgba(99,102,241,0.15)]" />
             FAQ
           </div>
-          <h2 className="mt-5 text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
+          <h2 className="mt-6 text-balance text-3xl font-semibold leading-[1.12] tracking-[-0.02em] text-slate-900 md:text-[2.375rem] md:leading-[1.1]">
             Frequently asked questions
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-600 md:text-lg">
+          <p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-slate-600 md:text-[1.0625rem] md:leading-[1.6]">
             Straight answers about how Mindscribe fits into your research workflow.
           </p>
         </div>
@@ -69,14 +69,14 @@ const Faq = () => {
                 key={buttonId}
                 className="overflow-hidden rounded-2xl border border-slate-200 bg-white/80 shadow-sm backdrop-blur transition hover:border-slate-300"
               >
-                <h3 className="text-base font-semibold md:text-lg">
+                <h3 className="text-[0.9375rem] font-semibold leading-snug tracking-[-0.01em] md:text-[1.0625rem]">
                   <button
                     type="button"
                     id={buttonId}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     onClick={() => toggleAnswer(index)}
-                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-slate-900 transition hover:bg-slate-50/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/30 md:px-6 md:py-5"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-slate-900 transition hover:bg-slate-50/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/30 md:px-6 md:py-[1.125rem]"
                   >
                     <span className="pr-2">{faq.question}</span>
                     <span
@@ -101,7 +101,7 @@ const Faq = () => {
                         aria-labelledby={buttonId}
                         className="border-t border-slate-100"
                       >
-                        <p className="px-5 pb-5 pt-0 text-sm leading-relaxed text-slate-600 md:px-6 md:pb-6 md:text-[15px]">
+                        <p className="px-5 pb-5 pt-1 text-[0.9375rem] font-normal leading-[1.65] text-slate-600 md:px-6 md:pb-6 md:text-base md:leading-[1.7]">
                           {faq.answer}
                         </p>
                       </div>
@@ -116,7 +116,7 @@ const Faq = () => {
                         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden border-t border-slate-100"
                       >
-                        <p className="px-5 pb-5 pt-0 text-sm leading-relaxed text-slate-600 md:px-6 md:pb-6 md:text-[15px]">
+                        <p className="px-5 pb-5 pt-1 text-[0.9375rem] font-normal leading-[1.65] text-slate-600 md:px-6 md:pb-6 md:text-base md:leading-[1.7]">
                           {faq.answer}
                         </p>
                       </motion.div>
